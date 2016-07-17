@@ -1,18 +1,13 @@
 package in.parmindr;
 
-import java.util.Stack;
-
-public class PathFinderDFS extends IPathFinder {
-
-	boolean[] isMarked;
-	int[] predecessor;
+public class PathFinderDFS extends PathFinder {
 
 	public PathFinderDFS(IGraph graph, int source) {
 		super(graph, source);
-		isMarked = new boolean[graph.V()];
-		predecessor = new int[graph.V()];
-		isMarked[source] = true;
-		predecessor[source] = source;
+	}
+
+	@Override
+	public void preCompute(IGraph graph, int source) {
 		DFS(graph, source);
 	}
 
@@ -25,23 +20,4 @@ public class PathFinderDFS extends IPathFinder {
 			}
 		}
 	}
-
-	@Override
-	public boolean hasPath(int v) {
-		return isMarked[v];
-	}
-
-	@Override
-	public Iterable<Integer> path(int v) {
-		Stack<Integer> path = new Stack<>();
-		if (hasPath(v)) {
-			path.push(v);
-			while (predecessor[v] != v) {
-				v = predecessor[v];
-				path.push(v);
-			}
-		}
-		return path;
-	}
-
 }

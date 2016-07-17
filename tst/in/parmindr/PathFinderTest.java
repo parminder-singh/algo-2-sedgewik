@@ -11,13 +11,25 @@ import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.Test;
 
-public class PathFinderDFSTest {
+public class PathFinderTest {
 
 	@Test
-	public void sanityTest() throws FileNotFoundException {
+	public void withDFS() throws FileNotFoundException {
 		Scanner in = new Scanner(new File(getClass().getResource("testGraph.txt").getFile()));
 		IGraph graph = new Graph(in);
 		PathFinderDFS pathFinder = new PathFinderDFS(graph, 4);
+		assertData(pathFinder);
+	}
+	
+	@Test
+	public void withBFS() throws FileNotFoundException {
+		Scanner in = new Scanner(new File(getClass().getResource("testGraph.txt").getFile()));
+		IGraph graph = new Graph(in);
+		PathFinderBFS pathFinder = new PathFinderBFS(graph, 4);
+		assertData(pathFinder);
+	}
+	
+	private void assertData(PathFinder pathFinder) {
 		assertEquals(false, pathFinder.hasPath(0));
 		assertEquals(true, pathFinder.hasPath(1));
 		assertEquals(true, pathFinder.hasPath(2));
