@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsCollectionContaining;
 import org.junit.Test;
 
@@ -16,11 +17,12 @@ public class GraphTest {
 	public void sanityTest() throws FileNotFoundException {
 		Scanner in = new Scanner(new File(getClass().getResource("testGraph.txt").getFile()));
 		IGraph graph = new Graph(in);
-		assertEquals(graph.V(), 4);
-		assertEquals(graph.E(), 4);
-		assertThat(graph.adj(0), IsCollectionContaining.hasItems(1,2,3));
-		assertThat(graph.adj(1), IsCollectionContaining.hasItems(0));
-		assertThat(graph.adj(2), IsCollectionContaining.hasItems(0,3));
-		assertThat(graph.adj(3), IsCollectionContaining.hasItems(0,2));
+		assertEquals(graph.V(), 5);
+		assertEquals(graph.E(), 3);
+		assertThat(graph.adj(0), IsEmptyIterable.emptyIterable());
+		assertThat(graph.adj(1), IsCollectionContaining.hasItems(2, 4));
+		assertThat(graph.adj(2), IsCollectionContaining.hasItems(3));
+		assertThat(graph.adj(3), IsCollectionContaining.hasItems(2));
+		assertThat(graph.adj(4), IsCollectionContaining.hasItems(1));
 	}
 }
